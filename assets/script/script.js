@@ -1,12 +1,11 @@
 var config = {
-    apiKey: "AIzaSyBSMeXdOGX4x6bZgpC8ZEmy6cM7JSTDaBo",
-    authDomain: "train-tracks-63944.firebaseapp.com",
-    databaseURL: "https://train-tracks-63944.firebaseio.com",
-    projectId: "train-tracks-63944",
-    storageBucket: "",
-    messagingSenderId: "1006104699786"
+    apiKey: "AIzaSyBEAxUReKIqpRIgWUmIQyfRtjchxxKrFeU",
+    authDomain: "train-tracks-2a8ea.firebaseapp.com",
+    databaseURL: "https://train-tracks-2a8ea.firebaseio.com",
+    projectId: "train-tracks-2a8ea",
+    storageBucket: "train-tracks-2a8ea.appspot.com",
+    messagingSenderId: "44624294694"
 };
-
 firebase.initializeApp(config);
 var database = firebase.database();
 
@@ -21,6 +20,7 @@ $("#buttonSubmit").on("click", function(event) {
             destination: empDest,
             time: empTime,
             frequency: empFreq
+            
         }
     database.ref().push(newTrain);
 console.log(newTrain.train);
@@ -35,7 +35,7 @@ console.log(newTrain.frequency);
 
 database.ref().on("child_added", function(nextTrain){
 console.log(nextTrain.val());
-    nextTrain.preventDefault();
+    event.preventDefault();
         var empName = nextTrain.val().train;
         var empDest = nextTrain.val().destination;
         var empTime = nextTrain.val().time;
@@ -45,12 +45,18 @@ console.log(empDest);
 console.log(empTime);
 console.log(empFreq);
 
+        var empTimeNice = moment(empTime, "hh:mm").subtract(1, "years");
+        var empMins = moment().diff(moment(empTimeNice), "minutes");
+        var tRemainder = empMins % empFreq;
+        var empMinsAway = empFreq - tRemainder;
+        var empNextArrival = moment().add(empMinsAway, "minutes");
+        var empNextArrivalNice = moment(empNextArrival).format("hh:mm");
         var newRow = $("<tr>").append(
             $("<td>").text(empName),
             $("<td>").text(empDest),
             $("<td>").text(empFreq),
-            $("<td>").text(empNextArrival),
-            $("<td>").text(empMinAway),
+            $("<td>").text(empNextArrivalNice),
+            $("<td>").text(empMinsAway),
         );
         $(".table > tbody").append(newRow);
 });
