@@ -1,0 +1,16 @@
+#trainFind{
+    float:right;
+    margin-right: 3%;
+}
+
+#trainSched{
+    float: left;
+    margin-left: 3%;
+}
+
+#title{
+    position: relative;
+    left:5%;
+    right:5%;
+    text-align: center;
+}
