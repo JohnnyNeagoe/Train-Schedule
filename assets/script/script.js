@@ -45,9 +45,11 @@ console.log(empDest);
 console.log(empTime);
 console.log(empFreq);
 
-        var empTimeNice = moment(empTime, "hh:mm").subtract(1, "years");
+        var empTimeNice = moment(empTime, "hh:mm").subtract(1, "day");
         var empMins = moment().diff(moment(empTimeNice), "minutes");
         var tRemainder = empMins % empFreq;
+        console.log(empMins);
+        console.log(tRemainder);
         var empMinsAway = empFreq - tRemainder;
         var empNextArrival = moment().add(empMinsAway, "minutes");
         var empNextArrivalNice = moment(empNextArrival).format("hh:mm");
